@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contest Form</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="assets/styles/styles.css" />
+  </head>
+  <body>
+    <main>
+      <section>
+        <i class="fa-solid fa-table-tennis-paddle-ball"></i>
+        <h1>TORNEIO DA PRIMAVERA</h1>
+        <p>Prémios até ao 10º lugar</p>
+        <div class="btns-control">
+          <button>Regulamento</button>
+          <button>Membros</button>
+        </div>
+      </section>
+      <section>
+        <form action="#">
+          <p><i class="fa-solid fa-pencil"></i> INSCREVA-SE AQUI</p>
+          <div class="input-control">
+            <label for="fullName">Nome completo<span>*</span></label>
+            <input type="text" id="fullName" name="fullName" />
+          </div>
+          <div class="input-control">
+            <label for="email">Email<span>*</span></label>
+            <input type="text" id="email" name="email" />
+          </div>
+          <div class="input-control">
+            <label for="phone">Telefone</label>
+            <input type="text" id="phone" name="phone" />
+          </div>
+          <div class="input-control">
+            <label for="birthdate">Data de nascimento</label>
+            <input type="text" id="birthdate" name="birthdate" />
+          </div>
+          <div class="input-control">
+            <label for="password">Senha<span>*</span></label>
+            <input type="password" id="password" name="password" />
+          </div>
+          <div class="input-control">
+            <label for="confirmPassword">Senha de novo<span>*</span></label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+            />
+          </div>
+          <div class="input-control">
+            <label for="level">Nível</label>
+            <select name="level" id="level">
+              <option value="beginner">Iniciado</option>
+              <option value="intermediate">Intermédio</option>
+              <option value="advanced">Avançado</option>
+              <option value="pre-professional">Pré-Profissional</option>
+              <option value="professional">Profissional</option>
+            </select>
+          </div>
+          <div class="input-control">
+            <input type="checkbox" id="terms" name="terms" />
+            <label for="terms"
+              >Li e concordo com a
+              <a id="terms" href="#">Política de privacidade</a></label
+            >
+          </div>
+          <div class="input-control">
+            <button type="submit">Submeter</button>
+            <button type="reset">Limpar</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
