@@ -1,68 +1,36 @@
-function validateName(event) {
-  const inputControl = event.target;
-  const errorElement = inputControl.nextElementSibling;
-  if (
-    !/^(([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]{2,})\s([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]{2,}\s?))+$/.test(
-      inputControl.value
-    )
-  ) {
-   errorElement.innerHTML = "&#x274C";
-  } else {
-   errorElement.innerHTML = "";
-  }
-}
-
-function validateEmail(event) {
-  const emailInput = event.target;
-  const errorElement = emailInput.nextElementSibling;
-
-  if (!/^\w+@\w+\.[a-zA-Z]{2,}$/.test(emailInput.value)) {
-   errorElement.innerHTML = "&#x274C";
-  } else {
-   errorElement.innerHTML = "";
-  }
-}
-
-function validatePhone(event) {
-  const phoneInput = event.target;
-  const errorElement = phoneInput.nextElementSibling;
-
-  if (!/(^\d{9}$)|(^\+\d{12}$)/.test(phoneInput.value)) {
-    errorElement.innerHTML = "&#x274C";
-  } else {
-    errorElement.innerHTML = "";
-  }
-
-  if (phoneInput.value.length === 0) {
-    errorElement.innerHTML = "";    
-  }
-}
-
-function validadeBirthdate(event) {
-  const birthdate = event.target;
-  const errorElement = birthdate.nextElementSibling;
-
-  if (!/^((0[1-9])|(1\d)|(2\d)|(3[0-1](?!\/02)))\/((0[1-9])|(1[0-2]))\/((1[8-9]{3})|(20[0-3]\d))$/.test(birthdate.value)) {
-    errorElement.innerHTML = "&#x274C";
-  } else{
-    errorElement.innerHTML = "";
-  }
-
-  if(birthdate.value.length === 0) {
-    errorElement.innerHTML = "";
-  }
-}
+import * as validator from "./validation.js";
+import { regexpValidation } from "./regexp.js";
 
 function main() {
   const nameInput = document.getElementById("fullName");
   const emailInput = document.getElementById("email");
   const phoneInput = document.getElementById("phone");
   const birthdateInput = document.getElementById("birthdate");
+  const passwordInput = document.getElementById("password");
+  const confirmPasswordInput = document.getElementById("confirmPassword");
+  const formButton = document.querySelector("button[type='button']");
 
-  nameInput.addEventListener("input", (event) => validateName(event));
-  emailInput.addEventListener("input", (event) => validateEmail(event));
-  phoneInput.addEventListener("input", (event) => validatePhone(event));
-  birthdateInput.addEventListener("input", (event) => validadeBirthdate(event));
+  nameInput.addEventListener("input", (event) =>
+    validator.validateRequiredField(event, regexpValidation.nameRegex)
+  );
+  emailInput.addEventListener("input", (event) =>
+    validator.validateRequiredField(event, regexpValidation.emailRegex)
+  );
+  passwordInput.addEventListener("input", (event) =>
+    validator.validateRequiredField(event, regexpValidation.passwordRegex)
+  );
+  phoneInput.addEventListener("input", (event) =>
+    validator.validateUnrequiredField(event, regexpValidation.phoneRegex)
+  );
+  birthdateInput.addEventListener("input", (event) =>
+    validator.validateUnrequiredField(event, regexpValidation.birthdateRegex)
+  );
+  confirmPasswordInput.addEventListener("input", (event) =>
+    validator.confirmPassword(event, passwordInput)
+  );
+  formButton.addEventListener("click", (event) =>
+    validator.validateForm(event)
+  );
 }
 
 window.addEventListener("load", main);
