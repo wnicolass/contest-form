@@ -76,6 +76,7 @@ input::placeholder {
   color: transparent;
 }
 
+/*----- INFO -----*/
 #spring-tourney-info {
   text-align: center;
   display: flex;
@@ -91,6 +92,7 @@ input::placeholder {
   font-weight: 500;
 }
 
+/*----- FORM -----*/
 #spring-tourney-form form {
   background-color: rgba(0, 0, 0, 0.6);
   padding: 1rem;
@@ -159,6 +161,7 @@ input::placeholder {
   color: #cf0000;
 }
 
+/*----- MEDIA QUERIES -----*/
 @media screen and (max-width: 768px) {
   input:not([type="checkbox"]),
   select {
