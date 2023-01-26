@@ -45,6 +45,13 @@ export function validateForm() {
   const terms = document.getElementById("terms");
   let hasError = false;
 
+  if (!terms.checked) {
+    terms.nextElementSibling.nextElementSibling.innerHTML = "&#x274C";
+    return;
+  } else {
+    terms.nextElementSibling.nextElementSibling.innerHTML = "";
+  }
+
   allInputs.forEach((input) => {
     if (input.classList.contains("required") && input.value.trim() === "") {
       hasError = true;
