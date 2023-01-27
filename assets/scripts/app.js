@@ -9,6 +9,7 @@ function main() {
   const passwordInput = document.getElementById("password");
   const confirmPasswordInput = document.getElementById("confirmPassword");
   const formButton = document.querySelector("button[type='button']");
+  const terms = document.getElementById("terms");
 
   nameInput.addEventListener("input", (event) =>
     validator.validateRequiredField(event, regexpValidation.nameRegex)
@@ -30,6 +31,9 @@ function main() {
   );
   formButton.addEventListener("click", (event) =>
     validator.validateForm(event)
+  );
+  terms.addEventListener("click", () =>
+    validator.validateIfTermIsChecked(terms)
   );
 }
 
