@@ -18,7 +18,7 @@ export function validateUnrequiredField({ target: input }, regex) {
     errorElement.innerHTML = "";
   }
 
-  if (phoneInput.value.length === 0) {
+  if (input.value.length === 0) {
     errorElement.innerHTML = "";
   }
 }
@@ -39,22 +39,53 @@ export function confirmPassword({ target }, passwordInput) {
   }
 }
 
+export function validateIfTermIsChecked(terms) {
+  if (terms.checked) {
+    terms.nextElementSibling.nextElementSibling.innerHTML = "";
+    return false;
+  }
+
+  if (!terms.checked) {
+    terms.nextElementSibling.nextElementSibling.innerHTML = "&#x274C";
+    return true;
+  }
+}
+
+function displaySuccessOrErrorMessage(hasError, allInputs) {
+  const resultElement = document.getElementById("result");
+  const message = resultElement.firstElementChild;
+
+  if (hasError) {
+    message.textContent =
+      "Não foi possível concluir a inscrição. Utilizador já registrado!";
+    message.classList.add("fail");
+    resultElement.style.display = "block";
+  } else {
+    message.textContent = "Inscrição realizada com sucesso";
+    message.classList.add("success");
+    allInputs.forEach((input) => (input.style.display = "none"));
+    resultElement.style.display = "block";
+  }
+}
+
 export function validateForm() {
   const allInputs = document.querySelectorAll("input:not([type='checkbox'])");
   const form = document.getElementById("tourneyForm");
   const terms = document.getElementById("terms");
   let hasError = false;
 
-  allInputs.forEach((input) => {
-    if (input.classList.contains("required") && input.value.trim() === "") {
-      hasError = true;
-    }
-    if (input.classList.contains("error")) {
-      hasError = true;
-    }
-  });
+  hasError = Array.from(allInputs).some(
+    (input) =>
+      input.classList.contains("error") ||
+      (input.classList.contains("required") && input.value.trim() === "")
+  );
+  if (hasError) {
+    return;
+  }
 
-  if (!hasError && terms.checked) {
+  hasError = validateIfTermIsChecked(terms);
+  if (!hasError) {
     form.submit();
+    displaySuccessOrErrorMessage(hasError, allInputs);
   }
 }
