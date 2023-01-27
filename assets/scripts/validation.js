@@ -40,18 +40,17 @@ export function confirmPassword({ target }, passwordInput) {
 }
 
 export function validateIfTermIsChecked(terms) {
-  if (terms.checked) {
-    terms.nextElementSibling.nextElementSibling.innerHTML = "";
-    return false;
-  }
-
   if (!terms.checked) {
     terms.nextElementSibling.nextElementSibling.innerHTML = "&#x274C";
     return true;
   }
+
+  terms.nextElementSibling.nextElementSibling.innerHTML = "";
+  return false;
 }
 
-function displaySuccessOrErrorMessage(hasError, allInputs) {
+function displaySuccessOrErrorMessage(hasError) {
+  const allInputGroups = document.querySelectorAll(".input-control");
   const resultElement = document.getElementById("result");
   const message = resultElement.firstElementChild;
 
@@ -63,7 +62,7 @@ function displaySuccessOrErrorMessage(hasError, allInputs) {
   } else {
     message.textContent = "Inscrição realizada com sucesso";
     message.classList.add("success");
-    allInputs.forEach((input) => (input.style.display = "none"));
+    allInputGroups.forEach((input) => (input.style.display = "none"));
     resultElement.style.display = "block";
   }
 }
@@ -85,7 +84,7 @@ export function validateForm() {
 
   hasError = validateIfTermIsChecked(terms);
   if (!hasError) {
-    form.submit();
-    displaySuccessOrErrorMessage(hasError, allInputs);
+    // form.submit();
+    displaySuccessOrErrorMessage(hasError);
   }
 }
