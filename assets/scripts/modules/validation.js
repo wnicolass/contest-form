@@ -1,4 +1,4 @@
-const participants = JSON.parse(localStorage.getItem("participants")) || {};
+const participants = JSON.parse(localStorage.getItem("participants")) ?? {};
 
 export function validateRequiredField({ target: input }, regex) {
   const errorElement = input.nextElementSibling;
@@ -73,7 +73,7 @@ function participantAlreadyExists(participantIdentifier) {
   return participantIdentifier in participants;
 }
 
-function handleUserData(event) {
+function storeUserData(event) {
   const formData = new FormData(event.target);
   const participantEmail = formData.get("email");
 
@@ -95,25 +95,29 @@ function handleUserData(event) {
   return false;
 }
 
-export function validateForm(event) {
-  event.preventDefault();
-
-  const allInputs = document.querySelectorAll("input:not([type='checkbox'])");
-  const terms = document.getElementById("terms");
-  let hasError = false;
-
-  hasError = Array.from(allInputs).some(
+function validateInputs() {
+  const inputs = document.querySelectorAll("input:not([type='checkbox'])");
+  return Array.from(inputs).some(
     (input) =>
       input.classList.contains("error") ||
       (input.classList.contains("required") && input.value.trim() === "")
   );
+}
+
+export function validateForm(event) {
+  event.preventDefault();
+
+  const terms = document.getElementById("terms");
+  let hasError = false;
+
+  hasError = validateInputs();
   if (hasError) {
     return;
   }
 
   hasError = validateIfTermIsChecked(terms);
   if (!hasError) {
-    hasError = handleUserData(event);
+    hasError = storeUserData(event);
     displaySuccessOrErrorMessage(hasError);
   }
 }
