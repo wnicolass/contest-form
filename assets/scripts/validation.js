@@ -70,9 +70,7 @@ function displaySuccessOrErrorMessage(hasError) {
 }
 
 function participantAlreadyExists(participantIdentifier) {
-  return (
-    participantIdentifier in JSON.parse(localStorage.getItem("participants"))
-  );
+  return participantIdentifier in participants;
 }
 
 function handleUserData(event) {
