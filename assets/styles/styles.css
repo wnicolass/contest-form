@@ -148,7 +148,7 @@ input::placeholder {
   display: none;
 }
 
-#spring-tourney-form #result {
+#spring-tourney-form #result p {
   font-size: 0.9rem;
   font-weight: 700;
 }

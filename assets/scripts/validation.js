@@ -1,3 +1,5 @@
+const participants = JSON.parse(localStorage.getItem("participants")) || {};
+
 export function validateRequiredField({ target: input }, regex) {
   const errorElement = input.nextElementSibling;
   if (!regex.test(input.value)) {
@@ -57,19 +59,48 @@ function displaySuccessOrErrorMessage(hasError) {
   if (hasError) {
     message.textContent =
       "Não foi possível concluir a inscrição. Utilizador já registrado!";
-    message.classList.add("fail");
+    message.className = "fail";
     resultElement.style.display = "block";
   } else {
     message.textContent = "Inscrição realizada com sucesso";
-    message.classList.add("success");
+    message.className = "success";
     allInputGroups.forEach((input) => (input.style.display = "none"));
     resultElement.style.display = "block";
   }
 }
 
-export function validateForm() {
+function participantAlreadyExists(participantIdentifier) {
+  return (
+    participantIdentifier in JSON.parse(localStorage.getItem("participants"))
+  );
+}
+
+function handleUserData(event) {
+  const formData = new FormData(event.target);
+  const participantEmail = formData.get("email");
+
+  if (participantAlreadyExists(participantEmail)) {
+    return true;
+  }
+
+  participants[participantEmail] = {
+    name: formData.get("fullName"),
+    phone: formData.get("phone"),
+    birthdate: formData.get("birthdate"),
+    password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword"),
+    level: formData.get("level"),
+    terms: formData.get("terms"),
+  };
+
+  localStorage.setItem("participants", JSON.stringify(participants));
+  return false;
+}
+
+export function validateForm(event) {
+  event.preventDefault();
+
   const allInputs = document.querySelectorAll("input:not([type='checkbox'])");
-  const form = document.getElementById("tourneyForm");
   const terms = document.getElementById("terms");
   let hasError = false;
 
@@ -84,7 +115,7 @@ export function validateForm() {
 
   hasError = validateIfTermIsChecked(terms);
   if (!hasError) {
-    // form.submit();
+    hasError = handleUserData(event);
     displaySuccessOrErrorMessage(hasError);
   }
 }

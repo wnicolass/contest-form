@@ -8,7 +8,7 @@ function main() {
   const birthdateInput = document.getElementById("birthdate");
   const passwordInput = document.getElementById("password");
   const confirmPasswordInput = document.getElementById("confirmPassword");
-  const formButton = document.querySelector("button[type='button']");
+  const form = document.getElementById("tourneyForm");
   const terms = document.getElementById("terms");
 
   nameInput.addEventListener("input", (event) =>
@@ -29,12 +29,10 @@ function main() {
   confirmPasswordInput.addEventListener("input", (event) =>
     validator.confirmPassword(event, passwordInput)
   );
-  formButton.addEventListener("click", (event) =>
-    validator.validateForm(event)
-  );
   terms.addEventListener("click", () =>
     validator.validateIfTermIsChecked(terms)
   );
+  form.addEventListener("submit", (event) => validator.validateForm(event));
 }
 
 window.addEventListener("load", main);
