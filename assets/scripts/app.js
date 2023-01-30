@@ -1,5 +1,5 @@
-import * as validator from "./validation.js";
-import { regexpValidation } from "./regexp.js";
+import * as validator from "./modules/validation.js";
+import { regexpValidation } from "./modules/regexp.js";
 
 function main() {
   const nameInput = document.getElementById("fullName");

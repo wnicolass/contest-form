@@ -1,3 +1,16 @@
+:root {
+  --blue-color-300: #31a1d1;
+  --blue-color-400: #25a0da;
+  --white-color-400: #fff;
+  --black-color-400: rgba(0, 0, 0, 0.4);
+  --black-color-500: rgba(0, 0, 0, 0.5);
+  --black-color-600: rgba(0, 0, 0, 0.6);
+  --black-color-700: #000;
+  --green-color-400: #02c902;
+  --red-color-500: #cf0000;
+  --red-color-700: #f00;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -16,11 +29,11 @@ body {
 
 body * {
   font-family: Arial, Helvetica, sans-serif;
-  color: #fff;
+  color: var(--white-color-400);
 }
 
 main {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--black-color-500);
 
   display: flex;
   justify-content: center;
@@ -32,7 +45,7 @@ main {
 }
 
 button {
-  background-color: #25a0da;
+  background-color: var(--blue-color-400);
   border-radius: 4px;
   border: none;
   padding-block: 0.5rem;
@@ -49,7 +62,7 @@ label {
 }
 
 label span {
-  color: #f00;
+  color: var(--red-color-700);
 }
 
 input:not([type="checkbox"]),
@@ -57,19 +70,19 @@ select {
   background-color: transparent;
   width: 12rem;
   border: none;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid var(--white-color-400);
   padding: 0.3rem;
 }
 
 input:focus,
 select:focus {
   outline: none;
-  border-color: #31a1d1;
+  border-color: var(--blue-color-300);
 }
 
 select:focus option {
-  background-color: rgba(0, 0, 0, 0.4);
-  color: #000;
+  background-color: var(--black-color-400);
+  color: var(--black-color-700);
 }
 
 input::placeholder {
@@ -94,7 +107,7 @@ input::placeholder {
 
 /*----- FORM -----*/
 #spring-tourney-form form {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: var(--black-color-600);
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -138,12 +151,12 @@ input::placeholder {
   width: 100%;
 }
 
-#terms {
-  color: #31a1d1;
+#termsLink {
+  color: var(--blue-color-300);
 }
 
 #result {
-  border: 1px solid #fff;
+  border: 1px solid var(--white-color-400);
   padding: 0.8rem;
   display: none;
 }
@@ -154,11 +167,11 @@ input::placeholder {
 }
 
 #spring-tourney-form #result p.success {
-  color: #02c902;
+  color: var(--green-color-400);
 }
 
 #spring-tourney-form #result p.fail {
-  color: #cf0000;
+  color: var(--red-color-500);
 }
 
 /*----- MEDIA QUERIES -----*/
@@ -169,7 +182,7 @@ input::placeholder {
   }
 
   input::placeholder {
-    color: #fff;
+    color: var(--white-color-400);
   }
 
   label {
