@@ -70,7 +70,7 @@ function displaySuccessOrErrorMessage(hasError) {
 }
 
 function participantAlreadyExists(participantIdentifier) {
-  return participantIdentifier in participants;
+  return Object.keys(participants).includes(participantIdentifier);
 }
 
 function storeUserData(event) {
