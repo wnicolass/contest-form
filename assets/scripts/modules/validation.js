@@ -1,5 +1,3 @@
-const participants = JSON.parse(localStorage.getItem("participants")) ?? {};
-
 export function validateRequiredField({ target: input }, regex) {
   const errorElement = input.nextElementSibling;
   if (!regex.test(input.value)) {
@@ -69,30 +67,34 @@ function displaySuccessOrErrorMessage(hasError) {
   }
 }
 
-function participantAlreadyExists(participantIdentifier) {
-  return Object.keys(participants).includes(participantIdentifier);
+async function handleData(dataToStore) {
+  const res = await fetch("http://localhost:8000/inscrever", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataToStore),
+  });
+  const data = await res.json();
+  return data;
 }
 
-function storeUserData(event) {
-  const formData = new FormData(event.target);
-  const participantEmail = formData.get("email");
+export async function fetchData() {
+  const inputs = document.querySelectorAll("input");
+  const selectElement = document.querySelector("select");
+  const data = {};
+  inputs.forEach((input) => {
+    data[input.name] = input.value;
+  });
+  data[selectElement.name] = selectElement.value;
 
-  if (participantAlreadyExists(participantEmail)) {
-    return true;
+  try {
+    const myObj = await handleData(data);
+    alert(myObj);
+  } catch (error) {
+    console.error(error.message);
   }
-
-  participants[participantEmail] = {
-    name: formData.get("fullName"),
-    phone: formData.get("phone"),
-    birthdate: formData.get("birthdate"),
-    password: formData.get("password"),
-    confirmPassword: formData.get("confirmPassword"),
-    level: formData.get("level"),
-    terms: formData.get("terms"),
-  };
-
-  localStorage.setItem("participants", JSON.stringify(participants));
-  return false;
 }
 
 function validateInputs() {
@@ -117,7 +119,6 @@ export function validateForm(event) {
 
   hasError = validateIfTermIsChecked(terms);
   if (!hasError) {
-    hasError = storeUserData(event);
     displaySuccessOrErrorMessage(hasError);
   }
 }

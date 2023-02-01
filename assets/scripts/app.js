@@ -8,8 +8,8 @@ function main() {
   const birthdateInput = document.getElementById("birthdate");
   const passwordInput = document.getElementById("password");
   const confirmPasswordInput = document.getElementById("confirmPassword");
-  const form = document.getElementById("tourneyForm");
   const terms = document.getElementById("terms");
+  const submitButton = document.querySelector('button[type="button"]');
 
   nameInput.addEventListener("input", (event) =>
     validator.validateRequiredField(event, regexpValidation.nameRegex)
@@ -32,7 +32,7 @@ function main() {
   terms.addEventListener("click", () =>
     validator.validateIfTermIsChecked(terms)
   );
-  form.addEventListener("submit", (event) => validator.validateForm(event));
+  submitButton.addEventListener("click", validator.fetchData);
 }
 
 window.addEventListener("load", main);
