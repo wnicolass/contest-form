@@ -32,7 +32,7 @@ function main() {
   terms.addEventListener("click", () =>
     validator.validateIfTermIsChecked(terms)
   );
-  submitButton.addEventListener("click", validator.fetchData);
+  submitButton.addEventListener("click", validator.validateForm);
 }
 
 window.addEventListener("load", main);

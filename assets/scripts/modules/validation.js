@@ -49,12 +49,12 @@ export function validateIfTermIsChecked(terms) {
   return false;
 }
 
-function displaySuccessOrErrorMessage(hasError) {
+function displaySuccessOrErrorMessage(result) {
   const allInputGroups = document.querySelectorAll(".input-control");
   const resultElement = document.getElementById("result");
   const message = resultElement.firstElementChild;
 
-  if (hasError) {
+  if (result === "failed") {
     message.textContent =
       "Não foi possível concluir a inscrição. Utilizador já registrado!";
     message.className = "fail";
@@ -67,36 +67,6 @@ function displaySuccessOrErrorMessage(hasError) {
   }
 }
 
-async function handleData(dataToStore) {
-  const res = await fetch("http://localhost:8000/inscrever", {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(dataToStore),
-  });
-  const data = await res.json();
-  return data;
-}
-
-export async function fetchData() {
-  const inputs = document.querySelectorAll("input");
-  const selectElement = document.querySelector("select");
-  const data = {};
-  inputs.forEach((input) => {
-    data[input.name] = input.value;
-  });
-  data[selectElement.name] = selectElement.value;
-
-  try {
-    const myObj = await handleData(data);
-    alert(myObj);
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-
 function validateInputs() {
   const inputs = document.querySelectorAll("input:not([type='checkbox'])");
   return Array.from(inputs).some(
@@ -106,9 +76,31 @@ function validateInputs() {
   );
 }
 
-export function validateForm(event) {
-  event.preventDefault();
+async function fetchData(dataToStore) {
+  const res = await fetch("http://localhost:8000/inscrever", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataToStore),
+  });
+  const data = await res.json();
+  displaySuccessOrErrorMessage(data);
+}
 
+export async function handleData() {
+  const inputs = document.querySelectorAll("input");
+  const selectElement = document.querySelector("select");
+  const data = {};
+  inputs.forEach((input) => {
+    data[input.name] = input.value;
+  });
+  data[selectElement.name] = selectElement.value;
+  fetchData(data);
+}
+
+export async function validateForm() {
   const terms = document.getElementById("terms");
   let hasError = false;
 
@@ -119,6 +111,6 @@ export function validateForm(event) {
 
   hasError = validateIfTermIsChecked(terms);
   if (!hasError) {
-    displaySuccessOrErrorMessage(hasError);
+    await handleData();
   }
 }
