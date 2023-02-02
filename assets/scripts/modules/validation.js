@@ -77,16 +77,20 @@ function validateInputs() {
 }
 
 async function fetchData(dataToStore) {
-  const res = await fetch("http://localhost:8000/inscrever", {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(dataToStore),
-  });
-  const data = await res.json();
-  displaySuccessOrErrorMessage(data);
+  try {
+    const res = await fetch("http://localhost:8000/inscrever", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToStore),
+    });
+    const data = await res.json();
+    displaySuccessOrErrorMessage(data);
+  } catch (error) {
+    console.error(error.message);
+  }
 }
 
 export async function handleData() {
